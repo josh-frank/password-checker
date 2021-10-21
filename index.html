@@ -1,0 +1,57 @@
+<script>
+
+    const atLeastEightCharacters = /.{8,}/;
+    const atLeastOneDigit = /(?=.*\d).*/;
+    const mixedCases = /(?=.*[A-Z])(?=.*[a-z]).*/;
+    const specialCharacter = /(?=.*[!@#$%&*]).*/;
+    const noCarats = /(?!.*[<>]).*/;
+    const validPassword = /(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%&*])(?!.*[<>]).{8,}/
+
+    document.addEventListener( "DOMContentLoaded", () => {
+        document.getElementById( "password-checker" ).addEventListener( "change", ( { target } ) => {
+            const [ hasAtLeastEightCharacters, hasOneDigit, hasMixedCases, hasSpecialCharacter, hasNoCarats ] = [
+                !!target.value.match( atLeastEightCharacters ),
+                !!target.value.match( atLeastOneDigit ),
+                !!target.value.match( mixedCases ),
+                !!target.value.match( specialCharacter ),
+                !!target.value.match( noCarats )
+            ];
+            document.querySelector( 'tr[name="eight-characters"]' ).style.backgroundColor = hasAtLeastEightCharacters ? "#9e9" : "#fcc";
+            document.querySelector( 'tr[name="eight-characters"] td' ).innerHTML = hasAtLeastEightCharacters ? "✓" : "✗";
+            document.querySelector( 'tr[name="one-digit"]' ).style.backgroundColor = hasOneDigit ? "#9e9" : "#fcc";
+            document.querySelector( 'tr[name="one-digit"] td' ).innerHTML = hasOneDigit ? "✓" : "✗";
+            document.querySelector( 'tr[name="both-cases"]' ).style.backgroundColor = hasMixedCases ? "#9e9" : "#fcc";
+            document.querySelector( 'tr[name="both-cases"] td' ).innerHTML = hasMixedCases ? "✓" : "✗";
+            document.querySelector( 'tr[name="special-character"]' ).style.backgroundColor = hasSpecialCharacter ? "#9e9" : "#fcc";
+            document.querySelector( 'tr[name="special-character"] td' ).innerHTML = hasSpecialCharacter ? "✓" : "✗";
+            document.querySelector( 'tr[name="no-carats"]' ).style.backgroundColor = hasNoCarats ? "#9e9" : "#fcc";
+            document.querySelector( 'tr[name="no-carats"] td' ).innerHTML = hasNoCarats ? "✓" : "✗";
+        } );
+    } );
+
+</script>
+
+<input id="password-checker" placeholder="Enter a password" />
+
+<table>
+    <tr name="eight-characters" style="background-color: #fcc;">
+        <td>✗</td>
+        <td>At least eight characters long</td>
+    </tr>
+    <tr name="one-digit" style="background-color: #fcc;">
+        <td>✗</td>
+        <td>At least one digit (0-9)</td>
+    </tr>
+    <tr name="both-cases" style="background-color: #fcc;">
+        <td>✗</td>
+        <td>Both uppercase and lowercase characters</td>
+    </tr>
+    <tr name="special-character" style="background-color: #fcc;">
+        <td>✗</td>
+        <td>At least one of the following: <code>!@#$%&*</code></td>
+    </tr>
+    <tr name="no-carats" style="background-color: #fcc;">
+        <td>✗</td>
+        <td>No carats: <code><></code></td>
+    </tr>
+</table>
